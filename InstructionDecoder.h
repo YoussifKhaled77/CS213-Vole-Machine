@@ -1,20 +1,17 @@
 #pragma once
-
-#include <cstdint>
-#include <string>
+#include <bits/stdc++.h>
+using namespace std;
 
 struct Instruction {
     uint8_t opcode;
-    uint8_t R;
-    uint8_t S;
-    uint8_t T;
-    uint8_t XY;
+    uint8_t first;
+    uint8_t second;
+    uint8_t third;
 };
 
-class InstructionDecoder {
+class InstructionDecoder{
 public:
-    bool validate(const std::string& instruction) const;
-    Instruction decode(const std::string& instruction) const;
+    Instruction decode(const string& instruction) const;
+    bool isValidFormat(const string& instruction) const;
     bool isValidRegister(int number) const;
-    bool isValidFormat(const std::string& instruction) const;
 };

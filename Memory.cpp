@@ -2,14 +2,14 @@
 
 Memory::Memory(Screen& screen) : screen_(screen) {}
 
-unsigned char Memory::read(size_t address) const{
+uint8_t Memory::read(size_t address) const{
     if(address >= MemorySize) {
         throw out_of_range("Memory read: Address out of range");
     }
     return cells_[address];
 }
 
-void Memory::write(size_t address, unsigned char value){
+void Memory::write(size_t address, uint8_t value){
     if (address >= MemorySize) {
         throw out_of_range("Memory write: Address out of range");
     }
@@ -20,7 +20,7 @@ void Memory::write(size_t address, unsigned char value){
     }
 }
 
-void Memory::loadInstruction(size_t address, unsigned short instruction) {
+void Memory::loadInstruction(size_t address, uint16_t instruction) {
     if (address >= MemorySize - 1) {
         throw out_of_range("Memory loadInstruction: Address out of range");
     }

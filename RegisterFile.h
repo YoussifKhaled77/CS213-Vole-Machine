@@ -5,13 +5,13 @@ using namespace std;
 class RegisterFile
 {
 private:
-    array<unsigned char, 16> registers_{};
+    array<uint8_t, 16> registers_{};
 
 public:
     RegisterFile();
     
-    unsigned char read(int index) const;
+    uint8_t read(int index) const;
     void clear();
-    void write(int index, unsigned char value);
+    void write(int index, uint8_t value);
     void display() const;
 };

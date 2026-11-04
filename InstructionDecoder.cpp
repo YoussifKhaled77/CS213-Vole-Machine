@@ -1,39 +1,56 @@
 #include "InstructionDecoder.h"
+#include <stdexcept>
 #include <cctype>
 
-bool InstructionDecoder::isValidRegister(int number) const {
+using namespace std;
+
+bool InstructionDecoder::isValidRegister(int number) const
+{
     return number >= 0 && number <= 15;
 }
 
-bool InstructionDecoder::isValidFormat(const std::string& instruction) const {
-    if (instruction.size() != 4) return false;
-    for (char c : instruction) {
-        if (!std::isxdigit(static_cast<unsigned char>(c))) return false;
+bool InstructionDecoder::isValidFormat(const string& instruction) const
+{
+    // An instruction must contain exactly 4 hexadecimal digits.
+    if (instruction.length() != 4)
+        return false;
+
+    for (char c : instruction)
+    {
+        if (!isxdigit(static_cast<unsigned char>(c)))
+            return false;
     }
-    return true;
+
+    int opcode = stoi(instruction.substr(0, 1), nullptr, 16);
+    int first = stoi(instruction.substr(1, 1), nullptr, 16);
+
+    // MOVE instruction: 4 0 R S
+    if (opcode == 4 && first != 0)
+        return false;
+
+    // ROTATE instruction: A R 0 X
+    if (opcode == 10 && instruction[2] != '0')
+        return false;
+
+    // HALT instruction: C 0 0 0
+    if (opcode == 12)
+        return instruction == "C000" || instruction == "c000";
+
+    // Supported opcodes: 1 through B.
+    return opcode >= 1 && opcode <= 11;
 }
 
-Instruction InstructionDecoder::decode(const std::string& instruction) const {
-    unsigned long raw = std::stoul(instruction, nullptr, 16);
+Instruction InstructionDecoder::decode(const string& instruction) const
+{
+    if (!isValidFormat(instruction))
+        throw invalid_argument("Invalid instruction format");
 
-    Instruction instr;
-    instr.opcode = static_cast<uint8_t>((raw >> 12) & 0x0F);
-    instr.R      = static_cast<uint8_t>((raw >> 8) & 0x0F);
-    instr.S      = static_cast<uint8_t>((raw >> 4) & 0x0F);
-    instr.T      = static_cast<uint8_t>(raw & 0x0F);
-    instr.XY     = static_cast<uint8_t>(raw & 0xFF);
-    return instr;
-}
+    Instruction result;
 
-bool InstructionDecoder::validate(const std::string& instruction) const {
-    if (!isValidFormat(instruction)) return false;
+    result.opcode = stoi(instruction.substr(0, 1), nullptr, 16);
+    result.first = stoi(instruction.substr(1, 1), nullptr, 16);
+    result.second = stoi(instruction.substr(2, 1), nullptr, 16);
+    result.third = stoi(instruction.substr(3, 1), nullptr, 16);
 
-    Instruction instr = decode(instruction);
-
-    if (instr.opcode < 0x1 || instr.opcode > 0xC) return false;
-    if (!isValidRegister(instr.R)) return false;
-    if (!isValidRegister(instr.S)) return false;
-    if (!isValidRegister(instr.T)) return false;
-
-    return true;
+    return result;
 }

@@ -7,7 +7,7 @@ class Screen
 {
 public:
     Screen();
-    void write(unsigned char value);
+    void write(uint8_t value);
     void display() const;
     void clear();
 

@@ -6,13 +6,13 @@ void RegisterFile::clear(){
     registers_.fill(0);
 }
 
-unsigned char RegisterFile::read(int index) const{
+uint8_t RegisterFile::read(int index) const{
         if (index < 0 || index >= 16) throw out_of_range("Register index out of range");
 
     return registers_[index];
 }
 
-void RegisterFile::write(int index, unsigned char value){
+void RegisterFile::write(int index, uint8_t value){
     if (index < 0 || index >= 16) throw out_of_range("Register index out of range");
 
     registers_[index] = value;

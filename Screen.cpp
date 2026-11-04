@@ -10,7 +10,7 @@ void Screen::clear()
     output_.clear();
 }
 
-void Screen::write(unsigned char value)
+void Screen::write(uint8_t value)
 {
     if (value >= 32 && value <= 126){
         output_+=(char(value));

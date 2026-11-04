@@ -1,8 +1,9 @@
 #pragma once
 
-#include <string>
-#include <cstdint>
+#include <bits/stdc++.h>
 #include "InstructionDecoder.h"
+
+using namespace std;    
 
 class Memory;
 class RegisterFile;
@@ -10,7 +11,7 @@ class RegisterFile;
 class CPU {
 private:
     int pc_;
-    std::string ir_;
+    string ir_;
     bool halted_;
 
     Memory& memory_;
@@ -29,6 +30,4 @@ public:
 
     void reset(int startAddress = 0);
     bool isHalted() const { return halted_; }
-    int getPC() const { return pc_; }
-    std::string getIR() const { return ir_; }
 };
