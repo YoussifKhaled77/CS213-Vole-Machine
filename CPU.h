@@ -30,4 +30,6 @@ public:
 
     void reset(int startAddress = 0);
     bool isHalted() const { return halted_; }
+    int getPC() const { return pc_; }
+    string getIR() const { return ir_; }
 };
