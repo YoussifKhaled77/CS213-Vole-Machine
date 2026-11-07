@@ -57,6 +57,16 @@ void VoleMachine::reset(int startAddress)
     cpu_.reset(startAddress);
 }
 
+void VoleMachine::writeMemory(size_t address, uint8_t value)
+{
+    memory_.write(address, value);
+}
+
+void VoleMachine::writeRegister(int index, uint8_t value)
+{
+    registers_.write(index, value);
+}
+
 void VoleMachine::displayMachineState() const
 {
     cout << "\n========== MACHINE STATE ==========\n";

@@ -26,6 +26,9 @@ public:
 
     void reset(int startAddress = 0);
 
+    void writeMemory(size_t address, uint8_t value);
+    void writeRegister(int index, uint8_t value);
+
     void displayMachineState() const;
     void displayScreenOutput() const;
 };
