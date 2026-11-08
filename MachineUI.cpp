@@ -11,7 +11,7 @@ void MachineUI::displayMainMenu() const
 {
     cout << "\n========== VOLE MACHINE ==========\n"
          << "1. Run program\n"
-         << "2. Run step-by-step\n"
+         << "2. Execute one instruction\n"
          << "3. Load program file\n"
          << "4. Modify memory\n"
          << "5. Modify register\n"
@@ -29,28 +29,9 @@ void MachineUI::runProgram()
 
 void MachineUI::runProgramStepByStep()
 {
-    string choice;
-    cout << "Starting step-by-step execution. Press 's' for next step, 'q' to quit.\n";
-    
-    while (true)
-    {
-        cout << "Command (s/q): ";
-        cin >> choice;
-        
-        if (choice == "q" || choice == "Q")
-        {
-            break;
-        }
-        else if (choice == "s" || choice == "S")
-        {
-            machine_.step();
-            printMachineStatus();
-        }
-        else
-        {
-            cout << "Please enter 's' or 'q' only.\n";
-        }
-    }
+    cout << "Executing one instruction.\n";
+    machine_.step();
+    printMachineStatus();
 }
 
 void MachineUI::loadProgram()
@@ -64,7 +45,6 @@ void MachineUI::loadProgram()
     cin >> hex >> address;
     
     machine_.loadProgram(filename, address);
-    cout << "Program loaded successfully!\n";
 }
 
 void MachineUI::modifyMemory()
@@ -102,5 +82,4 @@ void MachineUI::printMachineStatus() const
     cout << "\n--- Current Machine Status ---\n";
     machine_.displayMachineState();
     machine_.displayScreenOutput();
-    cout << "------------------------------\n";
 }

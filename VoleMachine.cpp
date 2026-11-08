@@ -18,8 +18,6 @@ void VoleMachine::loadProgram(const string& filename, int startAddress)
     reset(startAddress);
 
     loader_.loadFromFile(filename, startAddress);
-
-    cout << "\nProgram loaded successfully.\n";
 }
 
 void VoleMachine::run()

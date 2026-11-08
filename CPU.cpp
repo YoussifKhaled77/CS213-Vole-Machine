@@ -5,7 +5,8 @@
 #include <sstream>
 #include <cmath>
 
-CPU::CPU(Memory& memory, RegisterFile& registers) : memory_(memory), registers_(registers){}
+CPU::CPU(Memory& memory, RegisterFile& registers)
+    : pc_(0), ir_(), halted_(false), memory_(memory), registers_(registers) {}
 
 void CPU::reset(int startAddress){
     if (startAddress < 0 || startAddress >= 256)
