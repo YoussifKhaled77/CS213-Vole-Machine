@@ -13,9 +13,9 @@ int main()
     do
     {
         ui.displayMainMenu();
-        std::cout << "Choose an option: ";
+        cout << "Choose an option: ";
 
-        if (!(std::cin >> choice))
+        if (!(cin >> choice))
             return 1;
 
         switch (choice)
@@ -27,7 +27,7 @@ int main()
         case 5: ui.modifyRegister(); break;
         case 6: ui.printMachineStatus(); break;
         case 0: break;
-        default: std::cout << "Invalid choice.\n";
+        default: cout << "Invalid choice.\n";
         }
     } while (choice != 0);
 

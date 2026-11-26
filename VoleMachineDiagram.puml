@@ -1,0 +1,125 @@
+@startuml
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+class main
+
+class MachineUI {
+  - VoleMachine& machine_
+  + MachineUI(VoleMachine&)
+  + displayMainMenu() const
+  + runProgram()
+  + runProgramStepByStep()
+  + loadProgram()
+  + modifyMemory()
+  + modifyRegister()
+  + printMachineStatus() const
+}
+
+class VoleMachine {
+  - Screen screen_
+  - Memory memory_
+  - RegisterFile registers_
+  - CPU cpu_
+  - ProgramLoader loader_
+  + VoleMachine()
+  + loadProgram(const string&, int)
+  + run()
+  + step()
+  + reset(int)
+  + writeMemory(size_t, uint8_t)
+  + writeRegister(int, uint8_t)
+  + displayMachineState() const
+  + displayScreenOutput() const
+}
+
+class CPU {
+  - int pc_
+  - string ir_
+  - bool halted_
+  - Memory& memory_
+  - RegisterFile& registers_
+  - InstructionDecoder decoder_
+  + CPU(Memory&, RegisterFile&)
+  + fetch()
+  + executeStep()
+  + executeInstruction(const Instruction&)
+  + updatePC(int)
+  + reset(int)
+  + isHalted() const
+  + getPC() const
+  + getIR() const
+  - uint8_t addFloatingPoint(uint8_t, uint8_t)
+}
+
+class Memory {
+  - array<uint8_t, MemorySize> cells_
+  - Screen& screen_
+  + Memory(Screen&)
+  + read(size_t) const
+  + write(size_t, uint8_t)
+  + clear()
+  + loadInstruction(size_t, uint16_t)
+  + display() const
+}
+
+class RegisterFile {
+  - array<uint8_t, 16> registers_
+  + RegisterFile()
+  + read(int) const
+  + write(int, uint8_t)
+  + clear()
+  + display() const
+}
+
+class Screen {
+  - string output_
+  + Screen()
+  + write(uint8_t)
+  + display() const
+  + clear()
+}
+
+class ProgramLoader {
+  - Memory& memory_
+  - InstructionDecoder decoder_
+  + ProgramLoader(Memory&)
+  + loadFromFile(const string&, int)
+  + validateStartAddress(int) const
+  - vector<uint16_t> parseLine(const string&) const
+  - bool isValidInstruction(const string&) const
+}
+
+class InstructionDecoder {
+  + decode(const string&) const
+  + isValidFormat(const string&) const
+  + isValidRegister(int) const
+}
+
+struct Instruction {
+  + uint8_t opcode
+  + uint8_t first
+  + uint8_t second
+  + uint8_t third
+}
+
+main --> MachineUI
+MachineUI --> VoleMachine
+
+VoleMachine --> Screen
+VoleMachine --> Memory
+VoleMachine --> RegisterFile
+VoleMachine --> CPU
+VoleMachine --> ProgramLoader
+
+CPU --> Memory
+CPU --> RegisterFile
+CPU --> InstructionDecoder
+InstructionDecoder ..> Instruction
+CPU ..> Instruction
+ProgramLoader --> InstructionDecoder
+ProgramLoader --> Memory
+Memory --> Screen
+
+@enduml

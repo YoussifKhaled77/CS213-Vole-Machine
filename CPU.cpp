@@ -84,7 +84,7 @@ void CPU::executeInstruction(const Instruction& instruction) {
         }
         case 4: {
             // Move register R into register S.
-            registers_.write(first, registers_.read(second));
+            registers_.write(third, registers_.read(second));
             break;
         }
         case 5: {

@@ -25,7 +25,8 @@ vector<uint16_t> ProgramLoader::parseLine(const string& line) const
 {
     vector<uint16_t> instructions;
 
-    size_t start = line.find_first_not_of(" \t\r\n");
+    size_t start = line.compare(0, 3, "\xEF\xBB\xBF") == 0 ? 3 : 0;
+    start = line.find_first_not_of(" \t\r\n", start);
 
     if (start == string::npos || line[start] == ';')
         return instructions;
