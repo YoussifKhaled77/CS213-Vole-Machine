@@ -1,0 +1,12 @@
+; Program 1: Addition and Bitwise AND
+; This program adds three numbers and applies a Bitwise AND mask.
+
+210A
+220B
+230C
+5412
+5543
+260F
+8756
+37FF
+C000

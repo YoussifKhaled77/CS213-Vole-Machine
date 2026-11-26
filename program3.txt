@@ -1,0 +1,15 @@
+; ------------------------------------------------------------
+; Vole Machine Program: Count from 1 to 3 and print each number
+; R0 = target (3), R1 = counter, R2 = step (1)
+; Screen shows 01, 02, 03
+; Assumes the program is loaded at address 00.
+; ------------------------------------------------------------
+
+2003 ; addr 00: R0 = 03 (target)
+2100 ; addr 02: R1 = 00 (counter)
+2201 ; addr 04: R2 = 01 (step)
+5112 ; addr 06: R1 = R1 + R2 (loop start)
+31FF ; addr 08: print R1
+B10E ; addr 0A: if R1 == R0 jump to 0E (exit)
+B006 ; addr 0C: unconditional jump back to 06
+C000 ; addr 0E: Halt

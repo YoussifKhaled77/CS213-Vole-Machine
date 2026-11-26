@@ -1,0 +1,16 @@
+;---------------------------------------------------------------------
+; Program 2:
+; Vole machine program
+; Purpose: loads (1) and saves it in R1 and R2 
+; then loops and each iteration adds R1 and R2 
+; if R1 = 5 the loop breaks and prints the final answer on the screen
+;---------------------------------------------------------------------
+
+2005     ; Loads 5 to R0
+2101     ; Loads 1 to R1
+2201     ; Loads 1 to R2
+B10C  ; if R1 == R0, jump to the print instruction
+5121  ; R1 = R2 + R1
+B006  ; jump back to the comparison
+31FF  ; print R1
+C000  ; halt

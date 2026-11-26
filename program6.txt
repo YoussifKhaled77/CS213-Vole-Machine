@@ -1,0 +1,14 @@
+; This program checks whether a number stored in memory is even or odd.
+; It displays 00 for even numbers and 01 for odd numbers.
+
+2000 ; R0 = 00, the comparison value for even
+1120 ; Load the number from memory address 20 into R1
+2201 ; R2 = 01, the bit mask for the least significant bit
+8312 ; R3 = R1 AND R2; R3 is 00 for even, 01 for odd
+B310 ; If R3 equals R0, jump to address 10 (even case)
+2101 ; Odd case: load 01 into R1
+31FF ; Display R1 (01) on the screen
+C000 ; Halt after displaying the odd result
+2100 ; Even case: load 00 into R1
+31FF ; Display R1 (00) on the screen
+C000 ; Halt after displaying the even result
